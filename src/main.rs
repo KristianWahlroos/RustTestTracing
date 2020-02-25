@@ -7,11 +7,14 @@ fn hello_world() {
 
 fn event_span() {
     event!(Level::INFO, "something happened");
-
     let span = span!(Level::INFO, "my_span");
-    let _guard = span.enter();
+    {
+        let _guard = span.enter();
 
-    event!(Level::DEBUG, "something happened inside my_span");
+        event!(Level::INFO, "something happened inside my_span");
+        event!(Level::INFO, "something happened inside my_span");
+    }
+    event!(Level::INFO, "something happened outside of my_span");
 }
 
 fn main() {
